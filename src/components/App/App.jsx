@@ -1,24 +1,23 @@
-import { nanoid } from "nanoid";
+import { useEffect } from "react";
 import ContactForm from "../ContactForm/ContactForm";
 import ContactList from "../ContactList/ContactList";
 import SearchBox from "../SearchBox/SearchBox";
-import "./App.css";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { fetchContacts } from "../../redux/contactsOps";
+import "./App.css";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const handleAddContact = (name, number) => {
-    const newContact = { id: nanoid(), name, number };
-    dispatch(addContact(newContact));
-  };
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
-    <div className="App">
-      <h1>Phonebook</h1>
-      <ContactForm onAddContact={handleAddContact} />
+    <div>
+      <h1>Книга контактів</h1>
       <SearchBox />
+      <ContactForm />
       <ContactList />
     </div>
   );
