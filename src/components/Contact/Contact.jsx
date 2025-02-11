@@ -1,32 +1,36 @@
-import css from "./Contact.module.css";
-import { HiPhone, HiUser } from "react-icons/hi";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsSlice";
+import { deleteContact } from "../../redux/contacts/operations";
+import css from "./Contact.module.css";
+import { MdPhoneIphone } from "react-icons/md";
+import { BiSolidContact } from "react-icons/bi";
+import PropTypes from "prop-types";
 
-const Contact = ({ id, name, number }) => {
+function Contact({ name, number, id }) {
   const dispatch = useDispatch();
-
-  const handleDelete = () => {
-    dispatch(deleteContact(id));
-  };
+  const onDelete = () => dispatch(deleteContact(id));
 
   return (
-    <li className={css.contact}>
-      <div className={css.container}>
-        <span className={css.iconText}>
-          <HiUser className={css.userIcon} size="24" />
-          {name}
-        </span>
-        <span className={css.iconText}>
-          <HiPhone className={css.phoneIcon} size="24" />
-          {number}
-        </span>
-      </div>
-      <button className={css.button} onClick={handleDelete}>
+    <li className={css.contactStyle}>
+      <ul>
+        <li>
+          <BiSolidContact />
+          <p>Name: {name}</p>
+        </li>
+        <li>
+          <MdPhoneIphone />
+          <p>Number: {number}</p>
+        </li>
+      </ul>
+      <button className={css.deleteButton} onClick={() => onDelete()}>
         Delete
       </button>
     </li>
   );
+}
+Contact.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
 };
 
 export default Contact;
